@@ -1,0 +1,100 @@
+/* Editor Specific Styles */
+
+/* Improve the typography of the contentEditable area */
+.editor-body {
+    outline: none;
+    min-height: 50vh;
+    padding-bottom: 100px;
+}
+
+/* Headings inside editor */
+.editor-body h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    font-weight: 700;
+}
+
+.editor-body h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+}
+
+.editor-body p {
+    margin-bottom: 1em;
+}
+
+.editor-body ul,
+.editor-body ol {
+    margin-bottom: 1em;
+    padding-left: 1.5em;
+}
+
+/* Placeholder for empty new lines (optional) */
+.editor-body p:empty::before {
+    content: '\200b';
+    /* Zero width space to keep line height */
+}
+
+/* =========================================
+   FLOATING TOOLBAR
+   ========================================= */
+.floating-toolbar {
+    position: absolute;
+    /* Relative to viewport/body usually, but we'll use fixed or absolute based on implementation */
+    z-index: 1000;
+    background-color: #1c1c1e;
+    /* Always dark for contrast, or variable */
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    gap: 4px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+
+    /* Animation */
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    visibility: hidden;
+}
+
+.floating-toolbar.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+}
+
+/* Dark mode adjustments if main theme is dark */
+@media (prefers-color-scheme: dark) {
+    .floating-toolbar {
+        background-color: #3a3a3c;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+.toolbar-btn {
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.1s;
+}
+
+.toolbar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toolbar-btn.active {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.toolbar-separator {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 4px;
+    align-self: stretch;
+}
