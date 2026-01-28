@@ -1,77 +1,39 @@
-import { useEffect, useRef, useState } from 'react';
-import './Editor.css';
+import { Button } from '../ui/Button';
 
-interface FloatingToolbarProps {
-    onFormat: (command: string, value?: string) => void;
+interface Props {
+    position: { top: number; left: number };
+    onFormat?: (command: string, value?: string) => void;
 }
 
-export const FloatingToolbar = ({ onFormat }: FloatingToolbarProps) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
-
-    useEffect(() => {
-        const handleSelectionChange = () => {
-            const selection = window.getSelection();
-            if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
-                setPosition(null);
-                return;
-            }
-
-            const range = selection.getRangeAt(0);
-            const rect = range.getBoundingClientRect();
-
-            // Check if selection is within the editor (optional safety check, but simple for now)
-            // For now, we assume if selecting text on screen it's valid.
-
-            if (rect.width === 0 && rect.height === 0) {
-                setPosition(null);
-                return;
-            }
-
-            // Calculate position centered above the selection
-            // const editorRect = document.querySelector('.editor-content')?.getBoundingClientRect();
-
-            setPosition({
-                top: rect.top - 50, // 50px above selection
-                left: rect.left + rect.width / 2, // Centered
-            });
-        };
-
-        document.addEventListener('selectionchange', handleSelectionChange);
-        // Also handle resizing
-        window.addEventListener('resize', handleSelectionChange);
-
-        return () => {
-            document.removeEventListener('selectionchange', handleSelectionChange);
-            window.removeEventListener('resize', handleSelectionChange);
-        };
-    }, []);
-
-    if (!position) return null;
-
-    const handleAction = (e: React.MouseEvent, command: string, value?: string) => {
-        e.preventDefault(); // Prevent losing focus from editor
-        onFormat(command, value);
+export const FloatingToolbar = ({ position, onFormat }: Props) => {
+    const exec = (cmd: string, val?: string) => {
+        if (onFormat) {
+            onFormat(cmd, val);
+        } else {
+            document.execCommand(cmd, false, val);
+        }
     };
 
     return (
         <div
-            ref={ref}
-            className={`floating-toolbar ${position ? 'visible' : ''}`}
             style={{
+                position: 'fixed',
                 top: position.top,
                 left: position.left,
-                transform: 'translateX(-50%)', // Center alignment
+                backgroundColor: '#2c2c2e',
+                padding: '4px',
+                borderRadius: '8px',
+                display: 'flex',
+                gap: '4px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                zIndex: 100,
+                transform: 'translateX(-20%)'
             }}
         >
-            <button className="toolbar-btn" onMouseDown={(e) => handleAction(e, 'bold')}>B</button>
-            <button className="toolbar-btn" onMouseDown={(e) => handleAction(e, 'italic')}>I</button>
-            <button className="toolbar-btn" onMouseDown={(e) => handleAction(e, 'strikeThrough')}>S</button>
-
-            <div className="toolbar-separator" />
-
-            <button className="toolbar-btn" onMouseDown={(e) => handleAction(e, 'formatBlock', 'H1')}>H1</button>
-            <button className="toolbar-btn" onMouseDown={(e) => handleAction(e, 'formatBlock', 'H2')}>H2</button>
+            <Button size="sm" onClick={() => exec('bold')} style={{ color: '#fff' }}>B</Button>
+            <Button size="sm" onClick={() => exec('italic')} style={{ color: '#fff' }}>I</Button>
+            <Button size="sm" onClick={() => exec('formatBlock', 'H1')} style={{ color: '#fff' }}>H1</Button>
+            <Button size="sm" onClick={() => exec('formatBlock', 'H2')} style={{ color: '#fff' }}>H2</Button>
         </div>
     );
 };

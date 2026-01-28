@@ -1,25 +1,14 @@
-import { Sidebar } from './components/layout/Sidebar';
-import { NoteList } from './components/layout/NoteList';
-import { Editor } from './components/layout/Editor';
-import { StoreProvider } from './store/StoreContext';
-import { useShortcuts } from './hooks/useShortcuts';
-
-const AppContent = () => {
-  useShortcuts();
-  return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      <Sidebar />
-      <NoteList />
-      <Editor />
-    </div>
-  );
-};
+import { AppProvider } from './store/AppContext';
+import { AppShell } from './components/app/AppShell';
+import { AppLayout } from './components/app/AppLayout';
 
 function App() {
   return (
-    <StoreProvider>
-      <AppContent />
-    </StoreProvider>
+    <AppProvider>
+      <AppShell>
+        <AppLayout />
+      </AppShell>
+    </AppProvider>
   );
 }
 

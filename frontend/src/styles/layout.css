@@ -1,0 +1,130 @@
+/* Layout Styles */
+
+.app-shell {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-app);
+}
+
+/* Sidebar */
+.sidebar-container {
+    width: 260px;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-shrink: 0;
+}
+
+.sidebar-section-title {
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 8px;
+}
+
+.folder-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    margin: 0 8px;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.folder-item.active {
+    background-color: rgba(0, 0, 0, 0.06);
+    /* Gray active state for folder */
+    font-weight: 600;
+}
+
+.dark-mode .folder-item.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Note List */
+.notelist-container {
+    width: 320px;
+    background-color: var(--bg-list);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.notelist-header {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.notelist-scroll {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.group-header {
+    position: sticky;
+    top: 0;
+    padding: 8px 20px;
+    background-color: var(--bg-list);
+    opacity: 0.95;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.note-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+}
+
+.note-item.active {
+    background-color: var(--bg-selected);
+    color: var(--text-selected);
+    border-bottom-color: transparent;
+}
+
+.note-item.active * {
+    color: var(--text-selected) !important;
+}
+
+.note-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.note-preview {
+    font-size: 14px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Editor */
+.editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-app);
+}

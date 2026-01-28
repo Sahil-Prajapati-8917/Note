@@ -1,34 +1,30 @@
 import { useEffect } from 'react';
-import { useStore } from '../store/StoreContext';
+import { useAppStore } from '../store/AppContext';
+import { createNote } from '../store/actions';
 
 export const useShortcuts = () => {
-    const { state, dispatch } = useStore();
+    const { state, dispatch } = useAppStore();
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             // Cmd/Ctrl + N: New Note
             if ((e.metaKey || e.ctrlKey) && e.key === 'n') {
                 e.preventDefault();
-                dispatch({
-                    type: 'ADD_NOTE',
-                    payload: { folderId: state.activeFolderId === 'all-notes' ? 'personal' : state.activeFolderId || 'personal' },
-                });
+                const folderId = state.activeFolderId || 'personal';
+                dispatch(createNote(folderId));
             }
 
             // Cmd/Ctrl + F: Search
             if ((e.metaKey || e.ctrlKey) && e.key === 'f') {
                 e.preventDefault();
-                const searchInput = document.querySelector('.search-bar') as HTMLInputElement;
-                if (searchInput) {
-                    searchInput.focus();
-                }
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) searchInput.focus();
             }
 
             // Escape: Blur
             if (e.key === 'Escape') {
-                const activeElement = document.activeElement as HTMLElement;
-                if (activeElement) {
-                    activeElement.blur();
+                if (document.activeElement instanceof HTMLElement) {
+                    document.activeElement.blur();
                 }
             }
         };
