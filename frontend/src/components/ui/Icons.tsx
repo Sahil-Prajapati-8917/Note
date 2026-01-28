@@ -35,3 +35,9 @@ export const IconGrid = (props: React.SVGProps<SVGSVGElement>) => (
         <rect x="3" y="14" width="7" height="7"></rect>
     </svg>
 );
+
+export const IconChevronLeft = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+);

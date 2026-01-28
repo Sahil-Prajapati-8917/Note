@@ -3,7 +3,7 @@ import type { ThemeMode } from '../types/theme';
 
 export type AppAction =
     | { type: 'SET_ACTIVE_FOLDER'; payload: string }
-    | { type: 'SET_ACTIVE_NOTE'; payload: string }
+    | { type: 'SET_ACTIVE_NOTE'; payload: string | null }
     | { type: 'ADD_NOTE'; payload: { folderId: string } }
     | { type: 'UPDATE_NOTE'; payload: { id: string; changes: Partial<Note> } }
     | { type: 'DELETE_NOTE'; payload: string }

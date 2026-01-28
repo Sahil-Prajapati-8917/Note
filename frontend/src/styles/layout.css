@@ -128,3 +128,90 @@
     flex-direction: column;
     background-color: var(--bg-app);
 }
+
+/* Mobile Back Button - Hidden by default */
+.mobile-back-btn {
+    display: none;
+    margin-right: 8px;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--accent-color);
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 768px) {
+    .app-shell {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .sidebar-container,
+    .notelist-container,
+    .editor-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1;
+        border-right: none;
+    }
+
+    .mobile-back-btn {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    /* Views Logic */
+    /* If View = Sidebar */
+    .view-sidebar .sidebar-container {
+        transform: translateX(0);
+        z-index: 10;
+    }
+
+    .view-sidebar .notelist-container {
+        transform: translateX(100%);
+        z-index: 5;
+    }
+
+    .view-sidebar .editor-container {
+        transform: translateX(100%);
+        z-index: 1;
+    }
+
+    /* If View = NoteList */
+    .view-list .sidebar-container {
+        transform: translateX(-30%);
+        z-index: 1;
+    }
+
+    .view-list .notelist-container {
+        transform: translateX(0);
+        z-index: 10;
+    }
+
+    .view-list .editor-container {
+        transform: translateX(100%);
+        z-index: 5;
+    }
+
+    /* If View = Editor */
+    .view-editor .sidebar-container {
+        transform: translateX(-30%);
+        z-index: 0;
+    }
+
+    .view-editor .notelist-container {
+        transform: translateX(-30%);
+        z-index: 1;
+    }
+
+    .view-editor .editor-container {
+        transform: translateX(0);
+        z-index: 10;
+    }
+}

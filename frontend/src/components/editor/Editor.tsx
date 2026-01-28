@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../../store/AppContext';
 import { updateNote } from '../../store/actions';
 import { FloatingToolbar } from './FloatingToolbar';
+import { IconChevronLeft } from '../ui/Icons';
 import '../../styles/layout.css';
 
 export const Editor = () => {
@@ -50,10 +51,24 @@ export const Editor = () => {
         }
     };
 
+    const handleFormat = (cmd: string, val?: string) => {
+        document.execCommand(cmd, false, val);
+    };
+
     return (
         <div className="editor-container">
-            <div style={{ padding: '20px', textAlign: 'center', fontSize: 12, opacity: 0.4 }}>
-                {new Date(note.updatedAt).toLocaleString()}
+            <div className="editor-header-mobile" style={{ display: 'flex', alignItems: 'center', padding: '10px 20px' }}>
+                <div
+                    className="mobile-back-btn"
+                    onClick={() => dispatch({ type: 'SET_ACTIVE_NOTE', payload: null })}
+                    style={{ marginRight: 16 }}
+                >
+                    <IconChevronLeft /> Back
+                </div>
+                <div style={{ fontSize: 12, opacity: 0.4, flex: 1, textAlign: 'center' }}>
+                    {new Date(note.updatedAt).toLocaleString()}
+                </div>
+                <div style={{ width: 40 }}></div> {/* Spacer for balance */}
             </div>
 
             <div className="editor-content" style={{ maxWidth: 700, margin: '0 auto', width: '100%', padding: '0 40px' }}>
@@ -76,7 +91,7 @@ export const Editor = () => {
                 />
             </div>
 
-            {showToolbar && <FloatingToolbar position={toolbarPos} />}
+            {showToolbar && <FloatingToolbar position={toolbarPos} onFormat={handleFormat} />}
         </div>
     );
 };

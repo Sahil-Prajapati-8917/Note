@@ -3,7 +3,7 @@ import type { DateGroup } from '../../utils/dateGrouping';
 import { groupNotesByDate } from '../../utils/dateGrouping';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
-import { IconCompose, IconTrash } from '../ui/Icons';
+import { IconCompose, IconTrash, IconChevronLeft } from '../ui/Icons';
 import { createNote, deleteNote } from '../../store/actions';
 import '../../styles/layout.css';
 
@@ -30,6 +30,12 @@ export const NoteList = () => {
     return (
         <div className="notelist-container">
             <div className="notelist-header">
+                <div
+                    className="mobile-back-btn"
+                    onClick={() => dispatch({ type: 'SET_ACTIVE_FOLDER', payload: '' })} // Empty string to clear
+                >
+                    <IconChevronLeft />
+                </div>
                 <Input
                     id="search-input"
                     placeholder="Search"
