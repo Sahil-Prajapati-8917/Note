@@ -19,10 +19,11 @@ export interface Folder {
 export interface AppState {
     folders: Folder[];
     notes: Note[];
-    activeFolderId: string;
+    activeFolderId: string | null;
     activeNoteId: string | null;
     searchQuery: string;
     sidebarVisible: boolean;
+    theme: 'light' | 'dark' | 'system';
 }
 
 // Actions
@@ -30,7 +31,8 @@ export type Action =
     | { type: 'SET_ACTIVE_FOLDER'; payload: string }
     | { type: 'SET_ACTIVE_NOTE'; payload: string }
     | { type: 'SET_SEARCH_QUERY'; payload: string }
-    | { type: 'TOGGLE_SIDEBAR' }
-    | { type: 'ADD_NOTE'; payload: Partial<Note> }
+    | { type: 'ADD_NOTE'; payload: { folderId: string } }
     | { type: 'UPDATE_NOTE'; payload: { id: string; changes: Partial<Note> } }
-    | { type: 'DELETE_NOTE'; payload: string };
+    | { type: 'DELETE_NOTE'; payload: string }
+    | { type: 'TOGGLE_SIDEBAR' }
+    | { type: 'SET_THEME'; payload: 'light' | 'dark' | 'system' };

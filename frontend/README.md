@@ -1,77 +1,52 @@
-# Nebula Notes 📓
+# Nebula Notes 2.0 🌌
 
 > A calm, intelligent, and beautifully minimal note-taking experience inspired by Apple Notes.
+> **Production Ready Build (V1)**
 
-Nebula Notes is a **distraction-free, premium note-taking app** designed for deep thinking, long writing, and structured ideas. Unlike quick-capture tools, this app focuses on elegant organization and a rich, quiet writing environment.
+Nebula Notes is a **distraction-free, premium note-taking app** designed for deep thinking. It replicates the best parts of the macOS "Notes" experience on the web: native feel, instant interactions, and zero clutter.
 
 ## ✨ Core Philosophy
 
 *   **Content first, UI second**: Features appear only when needed.
 *   **Invisible Power**: Functionality that helps without noise.
-*   **Premium Feel**: Smooth animations, soft surfaces, and thoughtful typography.
+*   **Premium Feel**: Smooth animations, soft surfaces, and glassmorphism behaviors.
 
-## 🚀 Features
+## 🚀 Production Features
 
-*   **Smart Editor**: A distraction-free canvas (currently V1).
-*   **Folder Organization**: Nestable folders for Personal, Work, and Ideas.
-*   **Instant Search**: Filter notes by title or content in real-time.
-*   **Dynamic Theme**: Native-feeling Light and Dark modes.
-*   **Local First**: Data is stored locally (Mock data currently for the prototype phase).
+*   **Smart Editor**: A native, lag-free writing canvas with a logical floating toolbar.
+*   **Contextual Organization**: Notes are automatically grouped by time (**Today**, **Previous 7 Days**, etc.) with sticky headers.
+*   **Theme System**: Full support for **Light**, **Dark**, and **System** modes. Toggles instantly.
+*   **Local Persistence**: Data is safely stored in `localStorage` and persists across reloads.
+*   **Keyboard Shortcuts**: Navigate and create at the speed of thought.
 
-## compass User Experience Flow
+## ⌨️ Keyboard Shortcuts
 
-Nebula Notes follows a calm, predictable interaction model inspired by Apple’s Human Interface Guidelines.
+| Shortcut | Action |
+|All|All|
+| `Cmd + N` | Create New Note |
+| `Cmd + F` | Focus Search Bar |
+| `Esc` | Blur / Exit Focus |
 
-### App Launch
-*   The app opens to the last active folder.
-*   The most recently edited note is auto-selected.
-*   The editor is immediately ready for typing without extra clicks.
+## 📐 Architecture & Design
 
-### Creating a Note
-1.  User clicks **“New Note”** or uses a keyboard shortcut.
-2.  A blank note opens instantly in the editor.
-3.  Cursor is placed in the title field by default.
-4.  The note is auto-saved as the user types.
+### The "Smart Editor"
+The editor is built on native `contentEditable` principles to ensure 0kb bloat and 60fps typing performance.
+*   **Floating Toolbar**: Appears *only* when you select text.
+*   **Format Support**: Bold, Italic, Strikethrough, Heading 1, Heading 2.
+*   **Zero UI Chrome**: No always-on ribbons or buttons.
 
-> There is no explicit save action. Persistence is silent and continuous.
-
-### Navigating Notes
-*   Selecting a note from the list updates the editor instantly.
-*   No page reloads or transitions that break focus.
-*   Active note state is visually subtle, not aggressive.
-
-### Writing Experience
-*   The editor behaves like a canvas, not a form.
-*   Formatting controls are hidden by default.
-*   Toolbar appears only when text is selected.
-
-## ✍️ Editor Architecture & Behavior
-
-The editor is the heart of Nebula Notes and is designed to disappear while writing.
-
-### Core Principles
-*   **Zero typing lag**
-*   **No visible UI chrome while idle**
-*   **Predictable cursor behavior**
-*   **Consistent spacing and rhythm**
-
-### Formatting Behavior
-*   Inline formatting (bold, italic, underline)
-*   Headings adjust spacing automatically
-*   Lists continue intelligently on new lines
-*   Pasting content normalizes styles to match the editor
-
-**Formatting UI Rules:**
-*   Hidden when editor is idle
-*   Appears near selection
-*   Dismisses automatically on blur or escape
+### Visual Polish (Apple Aesthetic)
+We strictly adhere to a "MacOS" visual language:
+*   **Vibrancy**: The Sidebar uses `backdrop-filter: blur(20px)` to pull colors from the background.
+*   **Golden Accents**: Selection state uses the canonical Apple Notes Yellow (`#eebf46`).
+*   **Typography**: System font stack for immediate familiarity.
 
 ## 🛠 Tech Stack
 
 *   **Frontend**: React 19, TypeScript, Vite
-*   **Styling**: Vanilla CSS Variables (No frameworks, for maximum control)
-*   **State Management**: React Context + useReducer (Scalable, Redux-free)
-*   **Design System**: Custom "Apple-inspired" tokens
+*   **Styling**: Vanilla CSS Variables (No frameworks, pure control)
+*   **State**: React Context + `useReducer` (Redux-free)
+*   **Icons**: Custom SVG system (SF Symbols clones)
 
 ## 📦 Project Structure
 
@@ -79,99 +54,12 @@ The editor is the heart of Nebula Notes and is designed to disappear while writi
 src/
 ├── components/
 │   ├── layout/       # Sidebar, NoteList, Editor
-│   └── ui/           # Reusable atoms
-├── store/            # Global State (Context + Reducer)
-├── styles/           # Global CSS variables
-├── types/            # TypeScript interfaces (Note, Folder)
-└── App.tsx           # Main application entry
+│   └── ui/           # Icons, FloatingToolbar
+├── store/            # Global State & Persistence
+├── styles/           # Global CSS variables & Reset
+├── types/            # TypeScript interfaces
+└── hooks/            # useShortcuts
 ```
-
-## 🧠 State Management Strategy
-
-Nebula Notes uses a centralized state model based on **React Context + useReducer** to ensure predictability and scalability.
-
-### Why Context + Reducer?
-*   Clear data flow
-*   No external dependencies
-*   Easy to reason about
-*   Future-ready for persistence layers
-
-### Global State Responsibilities
-*   Active folder tracking
-*   Active note selection
-*   Notes CRUD operations
-*   UI state (theme, focus mode)
-
-### Example State Shape
-```ts
-interface AppState {
-  folders: Folder[];
-  notes: Note[];
-  activeFolderId: string | null;
-  activeNoteId: string | null;
-  theme: "light" | "dark";
-}
-```
-State updates are handled via explicit actions to avoid accidental mutations.
-
-## 🎨 Design System & Styling Approach
-
-Nebula Notes uses a **token-driven design system** inspired by Apple’s visual language.
-
-### Design Tokens
-All visual values are defined as CSS variables:
-*   Colors
-*   Typography
-*   Spacing
-*   Border radius
-*   Shadows
-
-**Example:**
-```css
-:root {
-  --bg-app: #ffffff;
-  --text-primary: #1c1c1e;
-  --text-secondary: #8e8e93;
-  --accent-color: #dfb236;
-  --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.06);
-}
-```
-
-### Theme Switching
-*   Light and Dark themes share the same token names.
-*   Only values change, not structure.
-*   This ensures consistent UI across themes.
-
-> No hardcoded colors are used in components.
-
-## 💾 Data Persistence Strategy
-
-Nebula Notes follows a **Local First** architecture.
-
-### Phase 1 (Current)
-*   In-memory state
-*   Mock data for development
-*   No persistence
-
-### Phase 2
-*   LocalStorage persistence
-*   Auto-hydration on app load
-*   Graceful fallback if storage fails
-
-### Phase 3
-*   Optional backend sync
-*   Conflict-free updates
-*   Offline-first behavior
-
-Data ownership always remains with the user.
-
-## 🧪 Non-Functional Requirements
-
-*   **Editor input latency**: < 16ms
-*   **Zero layout shift** during typing
-*   Smooth **60fps scrolling**
-*   Accessible **keyboard navigation**
-*   **Screen reader friendly** structure
 
 ## ⚡️ Getting Started
 
@@ -180,7 +68,7 @@ Data ownership always remains with the user.
     npm install
     ```
 
-2.  **Start the development server**:
+2.  **Start the app**:
     ```bash
     npm run dev
     ```
@@ -190,13 +78,15 @@ Data ownership always remains with the user.
     npm run build
     ```
 
-## 🗺 Roadmap
+## 🗺 Feature Roadmap (Status: Complete)
 
-- [x] **Phase 1**: Foundation & Design System (Apple-like Theme)
+- [x] **Phase 1**: Foundation & Design System
 - [x] **Phase 2**: Core Layout (3-Pane View)
 - [x] **Phase 3**: Data Model & State Management
-- [ ] **Phase 4**: Advanced Rich Text Editor (Floating toolbar, formatting)
-- [ ] **Phase 5**: Persistence (Local Storage / Backend)
+- [x] **Phase 4**: Smart Editor (Floating Toolbar)
+- [x] **Phase 5**: Persistence (LocalStorage)
+- [x] **Phase 6**: Design Polish (Glassmorphism, Icons)
+- [x] **Phase 7**: Production Features (Shortcuts, Grouping)
 
 ---
 

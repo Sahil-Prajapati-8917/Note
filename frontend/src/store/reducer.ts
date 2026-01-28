@@ -56,6 +56,7 @@ export const initialState: AppState = {
     activeNoteId: '1', // Select first note by default
     searchQuery: '',
     sidebarVisible: true,
+    theme: 'system',
 };
 
 export const reducer = (state: AppState, action: Action): AppState => {
@@ -70,20 +71,15 @@ export const reducer = (state: AppState, action: Action): AppState => {
             return { ...state, sidebarVisible: !state.sidebarVisible };
         case 'ADD_NOTE': {
             const newNote: Note = {
-                id: Date.now().toString(),
-                title: action.payload.title || 'New Note',
-                content: action.payload.content || '',
-                folderId: state.activeFolderId === 'all-notes' ? 'personal' : state.activeFolderId,
+                id: crypto.randomUUID(),
+                title: 'New Note',
+                content: '',
+                folderId: action.payload.folderId,
                 isPinned: false,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
-                ...action.payload,
             };
-            return {
-                ...state,
-                notes: [newNote, ...state.notes],
-                activeNoteId: newNote.id,
-            };
+            return { ...state, notes: [newNote, ...state.notes], activeNoteId: newNote.id };
         }
         case 'UPDATE_NOTE':
             return {

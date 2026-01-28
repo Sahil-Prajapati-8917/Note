@@ -31,6 +31,32 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
     }, [state]);
 
+    // Apply Theme
+    useEffect(() => {
+        const applyTheme = () => {
+            const root = document.documentElement;
+            const isDark =
+                state.theme === 'dark' ||
+                (state.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+            if (isDark) {
+                root.classList.add('dark-mode');
+            } else {
+                root.classList.remove('dark-mode');
+            }
+        };
+
+        applyTheme();
+
+        // Listen for system changes if in 'system' mode
+        if (state.theme === 'system') {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            const handler = () => applyTheme();
+            mediaQuery.addEventListener('change', handler);
+            return () => mediaQuery.removeEventListener('change', handler);
+        }
+    }, [state.theme]);
+
     return (
         <StoreContext.Provider value={{ state, dispatch }}>
             {children}
