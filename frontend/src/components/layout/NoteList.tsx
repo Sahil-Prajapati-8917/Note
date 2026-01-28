@@ -1,4 +1,5 @@
 import { useStore } from '../../store/StoreContext';
+import { IconCompose, IconTrash } from '../ui/Icons';
 import './Layout.css';
 
 export const NoteList = () => {
@@ -47,7 +48,7 @@ export const NoteList = () => {
                     onChange={(e) => dispatch({ type: 'SET_SEARCH_QUERY', payload: e.target.value })}
                 />
                 <button className="icon-btn" onClick={handleCreateNote} title="New Note">
-                    +
+                    <IconCompose />
                 </button>
             </div>
             <div className="note-list-content">
@@ -57,14 +58,14 @@ export const NoteList = () => {
                         className={`note-item ${state.activeNoteId === note.id ? 'active' : ''}`}
                         onClick={() => dispatch({ type: 'SET_ACTIVE_NOTE', payload: note.id })}
                     >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                             <h4 className="note-title">{note.title}</h4>
                             <button
                                 className="delete-btn"
                                 onClick={(e) => handleDeleteNote(e, note.id)}
                                 title="Delete Note"
                             >
-                                &times;
+                                <IconTrash />
                             </button>
                         </div>
                         <p className="note-preview">
