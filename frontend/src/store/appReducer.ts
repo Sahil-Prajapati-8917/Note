@@ -35,6 +35,15 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
         case 'SET_SEARCH_QUERY':
             return { ...state, searchQuery: action.payload };
 
+        case 'ADD_FOLDER':
+            return {
+                ...state,
+                folders: [
+                    ...state.folders,
+                    { id: crypto.randomUUID(), name: action.payload, type: 'user' }
+                ]
+            };
+
         case 'ADD_NOTE': {
             const newNote: Note = {
                 id: crypto.randomUUID(),

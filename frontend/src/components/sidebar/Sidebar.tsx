@@ -1,16 +1,27 @@
+import { useState } from 'react';
 import { useAppStore } from '../../store/AppContext';
 import { SidebarHeader } from './SidebarHeader';
-import { IconFolder } from '../ui/Icons';
+import { IconFolder, IconPlus } from '../ui/Icons';
+import { CreateFolderModal } from '../CreateFolderModal';
 import '../../styles/layout.css';
 
 export const Sidebar = () => {
     const { state, dispatch } = useAppStore();
+    const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
     return (
         <aside className="sidebar-container">
             <SidebarHeader />
 
-            <div className="sidebar-section-title">Folders</div>
+            <div className="sidebar-section-title">
+                <span style={{ flex: 1 }}>Folders</span>
+                <div
+                    onClick={() => setCreateModalOpen(true)}
+                    style={{ cursor: 'pointer', padding: '4px' }}
+                >
+                    <IconPlus style={{ width: 14, height: 14, opacity: 0.6 }} />
+                </div>
+            </div>
 
             <div className="sidebar-content">
                 {state.folders.map(folder => (
@@ -24,6 +35,12 @@ export const Sidebar = () => {
                     </div>
                 ))}
             </div>
+
+            <CreateFolderModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setCreateModalOpen(false)}
+                onCreate={(name) => dispatch({ type: 'ADD_FOLDER', payload: name })}
+            />
         </aside>
     );
 };
