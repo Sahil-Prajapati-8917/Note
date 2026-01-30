@@ -17,9 +17,9 @@ export const Sidebar = () => {
                 <span style={{ flex: 1 }}>Folders</span>
                 <div
                     onClick={() => setCreateModalOpen(true)}
-                    style={{ cursor: 'pointer', padding: '4px' }}
+                    style={{ cursor: 'pointer', padding: '8px', margin: '-4px' }}
                 >
-                    <IconPlus style={{ width: 14, height: 14, opacity: 0.6 }} />
+                    <IconPlus style={{ width: 14, height: 14, opacity: 0.8 }} />
                 </div>
             </div>
 

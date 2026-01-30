@@ -47,7 +47,7 @@ export const CreateFolderModal: React.FC<CreateFolderModalProps> = ({ isOpen, on
                 padding: '24px',
                 borderRadius: '12px',
                 boxShadow: 'var(--shadow-lg)',
-                width: '100%',
+                width: '90%', // Responsive width
                 maxWidth: '400px',
                 border: '1px solid var(--border-subtle)',
                 display: 'flex',
@@ -59,9 +59,9 @@ export const CreateFolderModal: React.FC<CreateFolderModalProps> = ({ isOpen, on
                     <h2 style={{ fontSize: '17px', fontWeight: 600, margin: 0 }}>New Folder</h2>
                     <button
                         onClick={onClose}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--text-secondary)' }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', margin: '-8px', color: 'var(--text-secondary)' }} // Increased touch target
                     >
-                        <IconX style={{ width: 20, height: 20 }} />
+                        <IconX style={{ width: 22, height: 22 }} />
                     </button>
                 </div>
 
