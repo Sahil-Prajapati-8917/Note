@@ -8,6 +8,8 @@ export interface AppState {
     activeFolderId: string | null;
     activeNoteId: string | null;
     searchQuery: string;
+    sidebarVisible: boolean;
+    viewMode: 'list' | 'grid';
     theme: ThemeMode;
 }
 
@@ -21,6 +23,8 @@ export const initialState: AppState = {
     activeFolderId: 'personal',
     activeNoteId: null,
     searchQuery: '',
+    sidebarVisible: true,
+    viewMode: 'list',
     theme: 'system',
 };
 
@@ -80,6 +84,12 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
                 activeNoteId: null
             };
         }
+
+        case 'TOGGLE_SIDEBAR':
+            return { ...state, sidebarVisible: !state.sidebarVisible };
+
+        case 'SET_VIEW_MODE':
+            return { ...state, viewMode: action.payload };
 
         case 'SET_THEME':
             return { ...state, theme: action.payload };

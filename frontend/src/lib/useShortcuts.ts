@@ -27,6 +27,16 @@ export const useShortcuts = () => {
                     document.activeElement.blur();
                 }
             }
+
+            // Cmd/Ctrl + Backspace: Delete Note
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Backspace') {
+                if (state.activeNoteId) {
+                    e.preventDefault();
+                    if (confirm('Delete note?')) {
+                        dispatch({ type: 'DELETE_NOTE', payload: state.activeNoteId });
+                    }
+                }
+            }
         };
 
         window.addEventListener('keydown', handleKeyDown);

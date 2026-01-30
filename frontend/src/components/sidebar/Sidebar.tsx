@@ -9,18 +9,17 @@ export const Sidebar = () => {
     const { state, dispatch } = useAppStore();
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
+    // Calculate counts
+    const getFolderCount = (folderId: string) => {
+        return state.notes.filter(n => n.folderId === folderId).length;
+    };
+
     return (
         <aside className="sidebar-container">
             <SidebarHeader />
 
             <div className="sidebar-section-title">
-                <span style={{ flex: 1 }}>Folders</span>
-                <div
-                    onClick={() => setCreateModalOpen(true)}
-                    style={{ cursor: 'pointer', padding: '8px', margin: '-4px' }}
-                >
-                    <IconPlus style={{ width: 14, height: 14, opacity: 0.8 }} />
-                </div>
+                On My Mac
             </div>
 
             <div className="sidebar-content">
@@ -31,9 +30,24 @@ export const Sidebar = () => {
                         onClick={() => dispatch({ type: 'SET_ACTIVE_FOLDER', payload: folder.id })}
                     >
                         <IconFolder style={{ width: 18, height: 18, opacity: 0.8 }} />
-                        {folder.name}
+                        <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {folder.name}
+                        </span>
+                        <span className="folder-count">
+                            {getFolderCount(folder.id)}
+                        </span>
                     </div>
                 ))}
+            </div>
+
+            <div className="sidebar-bottom-actions">
+                <button
+                    className="new-folder-btn"
+                    onClick={() => setCreateModalOpen(true)}
+                >
+                    <IconPlus style={{ width: 16, height: 16 }} />
+                    New Folder
+                </button>
             </div>
 
             <CreateFolderModal

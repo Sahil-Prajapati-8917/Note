@@ -10,6 +10,8 @@ export type AppAction =
     | { type: 'ADD_FOLDER'; payload: string } // payload is folder name
     | { type: 'SET_SEARCH_QUERY'; payload: string }
     | { type: 'SET_THEME'; payload: ThemeMode }
+    | { type: 'TOGGLE_SIDEBAR' }
+    | { type: 'SET_VIEW_MODE'; payload: 'list' | 'grid' }
     | { type: 'LOAD_STATE'; payload: any }; // For hydration
 
 export const createNote = (folderId: string): AppAction => ({

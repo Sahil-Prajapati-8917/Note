@@ -2,10 +2,39 @@
 
 .app-shell {
     display: flex;
+    flex-direction: column;
+    /* Toolbar on top, content below */
     width: 100vw;
     height: 100vh;
     overflow: hidden;
     background-color: var(--bg-app);
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Toolbar */
+.toolbar-container {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background-color: var(--bg-list);
+    /* Match sidebar/list bg */
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 /* Sidebar */
@@ -32,24 +61,66 @@
 .folder-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    margin: 0 8px;
+    gap: 8px;
+    padding: 6px 12px;
+    margin: 2px 12px;
     border-radius: 6px;
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
     transition: background 0.1s;
 }
 
 .folder-item.active {
-    background-color: rgba(0, 0, 0, 0.06);
-    /* Gray active state for folder */
-    font-weight: 600;
+    background-color: #eebf46;
+    /* Apple Notes Yellow */
+    color: #1a1a1a;
 }
 
+.folder-item.active svg {
+    color: #1a1a1a;
+    /* Ensure icon is dark on yellow */
+}
+
+/* Dark mode adjustment for active folder */
 .dark-mode .folder-item.active {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #dcb041;
+    color: #000000;
+}
+
+.folder-count {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.folder-item.active .folder-count {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.sidebar-bottom-actions {
+    margin-top: auto;
+    padding: 12px 16px;
+}
+
+.new-folder-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: color 0.1s;
+}
+
+.new-folder-btn:hover {
+    color: var(--text-primary);
 }
 
 /* Note List */
@@ -60,6 +131,14 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.notelist-container.full-width {
+    width: 100%;
+    border-right: none;
+    background-color: var(--bg-app);
+    /* Match app background in grid mode */
 }
 
 .notelist-header {
@@ -92,41 +171,244 @@
 }
 
 .note-item {
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border-subtle);
+    padding: 10px 14px;
+    margin: 4px 12px;
+    border-radius: 6px;
     cursor: pointer;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.note-item:last-child {
+    border-bottom: none;
 }
 
 .note-item.active {
-    background-color: var(--bg-selected);
-    color: var(--text-selected);
+    background-color: #fceea7;
+    /* Light Highlight (Yellow tint) */
+    color: var(--text-primary);
     border-bottom-color: transparent;
 }
 
+/* Ensure text doesn't change color on selection unlike dark mode selection usually */
 .note-item.active * {
-    color: var(--text-selected) !important;
+    color: var(--text-primary) !important;
 }
 
-.note-title {
-    font-weight: 600;
+.note-item.active .note-date {
+    color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Grid View Styles */
+.notelist-scroll.grid-view {
+    padding: 20px;
+}
+
+.grid-items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 32px 24px;
+    padding: 12px 0 32px 0;
+}
+
+.note-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    /* Animation inherit from previous rules (if applied to class) or re-apply */
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    /* Important for animation to work from 0 */
+}
+
+.note-card-preview-box {
+    background-color: #1e1e1e;
+    /* Slightly lighter than pure black */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Higher contrast border */
+    border-radius: 12px;
+    height: 140px;
+    padding: 16px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    /* Deeper shadow */
+    position: relative;
+}
+
+.note-card-wrapper.active .note-card-preview-box {
+    border-color: #eebf46;
+    box-shadow: 0 0 0 3px rgba(238, 191, 70, 0.4);
+    /* Stronger active glow */
+}
+
+.note-card-wrapper:hover .note-card-preview-box {
+    border-color: rgba(255, 255, 255, 0.4);
+    /* Brighter hover border */
+    transform: translateY(-2px);
+    /* Subtle lift */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.note-card-preview-content {
+    font-size: 10px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow: hidden;
+    height: 100%;
+    /* Create a mini-document look */
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.note-card-meta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 4px;
+}
+
+.note-card-title {
+    font-weight: 700;
+    /* Bolder title */
     font-size: 15px;
-    margin-bottom: 4px;
+    /* Slightly larger */
+    color: #ffffff;
+    /* Pure white */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.3px;
+    /* Tighter tracking */
+}
+
+.note-card-date {
+    font-size: 13px;
+    color: #86868b;
+    /* Specific gray for date */
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Modal Animation */
+.modal-content {
+    animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Note List Animations */
+.note-item {
+    /* Existing styles... */
+    animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Stagger effect can be done via :nth-child in a limited way or JS, 
+       but simple slideInUp for all is a good start. */
+}
+
+/* Grid View Animations */
+.note-card {
+    /* Existing styles... */
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sidebar Animation (if we switch to CSS toggle instead of unmount) 
+   Since we unclount, we can't easily animate *out*, but we can animate *in*. 
+*/
+.sidebar-container {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth Button Hovers */
+button {
+    transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+/* Existing styles below, modified slightly to ensure no conflicts if needed */
+.note-item.active .note-preview {
+    color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Scrollbar polish */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure tooltips or other elements are on top */
+.tooltip {
+    z-index: 1000;
+}
+
+
+.note-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 2px;
 }
 
 .note-preview {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-/* Editor */
-.editor-container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg-app);
+    /* Take remaining space */
+    min-width: 0;
+    /* important for flex overflow */
 }
 
 /* Mobile Back Button - Hidden by default */

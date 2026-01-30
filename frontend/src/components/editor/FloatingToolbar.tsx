@@ -32,6 +32,7 @@ export const FloatingToolbar = ({ position, onFormat }: Props) => {
         >
             <Button size="sm" onClick={() => exec('bold')} style={{ color: '#fff' }}>B</Button>
             <Button size="sm" onClick={() => exec('italic')} style={{ color: '#fff' }}>I</Button>
+            <Button size="sm" onClick={() => exec('strikeThrough')} style={{ color: '#fff', textDecoration: 'line-through' }}>S</Button>
             <Button size="sm" onClick={() => exec('formatBlock', 'H1')} style={{ color: '#fff' }}>H1</Button>
             <Button size="sm" onClick={() => exec('formatBlock', 'H2')} style={{ color: '#fff' }}>H2</Button>
         </div>

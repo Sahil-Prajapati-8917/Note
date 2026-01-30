@@ -14,7 +14,7 @@ Nebula Notes is a **distraction-free, premium note-taking app** designed for dee
 ## 🚀 Production Features
 
 *   **Smart Editor**: A native, lag-free writing canvas with a logical floating toolbar.
-*   **Contextual Organization**: Notes are automatically grouped by time (**Today**, **Previous 7 Days**, etc.) with sticky headers.
+*   **Folder Organization**: Create and manage custom folders to organize your notes your way.
 *   **Theme System**: Full support for **Light**, **Dark**, and **System** modes. Toggles instantly.
 *   **Local Persistence**: Data is safely stored in `localStorage` and persists across reloads.
 *   **Keyboard Shortcuts**: Navigate and create at the speed of thought.
@@ -86,7 +86,7 @@ src/
 - [x] **Phase 4**: Smart Editor (Floating Toolbar)
 - [x] **Phase 5**: Persistence (LocalStorage)
 - [x] **Phase 6**: Design Polish (Glassmorphism, Icons)
-- [x] **Phase 7**: Production Features (Shortcuts, Grouping)
+- [x] **Phase 7**: Production Features (Shortcuts, Folders)
 
 ---
 

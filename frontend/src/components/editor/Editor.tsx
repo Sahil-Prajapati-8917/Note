@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../../store/AppContext';
 import { updateNote } from '../../store/actions';
 import { FloatingToolbar } from './FloatingToolbar';
-import { IconChevronLeft } from '../ui/Icons';
 import '../../styles/layout.css';
 
 export const Editor = () => {
     const { state, dispatch } = useAppStore();
     const note = state.notes.find(n => n.id === state.activeNoteId);
 
-    const titleRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const [showToolbar, setShowToolbar] = useState(false);
     const [toolbarPos, setToolbarPos] = useState({ top: 0, left: 0 });
@@ -17,7 +15,7 @@ export const Editor = () => {
     // Sync state to UI when active note changes
     useEffect(() => {
         if (!note) return;
-        if (titleRef.current) titleRef.current.value = note.title;
+        // if (titleRef.current) titleRef.current.value = note.title; // Removed separate title sync
         if (contentRef.current && contentRef.current.innerHTML !== note.content) {
             contentRef.current.innerHTML = note.content;
         }
@@ -33,9 +31,14 @@ export const Editor = () => {
 
     const handleInput = () => {
         if (!note) return;
+        const content = contentRef.current?.innerHTML || '';
+        const textContent = contentRef.current?.innerText || '';
+        const firstLine = textContent.split('\n')[0].trim();
+        const title = firstLine || 'New Note';
+
         dispatch(updateNote(note.id, {
-            title: titleRef.current?.value || '',
-            content: contentRef.current?.innerHTML || ''
+            title: title.slice(0, 100), // Limit title length
+            content: content
         }));
     };
 
@@ -55,36 +58,30 @@ export const Editor = () => {
         document.execCommand(cmd, false, val);
     };
 
+    // Format Date: "21 January 2026 at 3:11 PM"
+    const formattedDate = new Date(note.updatedAt).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    }).replace(',', ' at');
+
     return (
-        <div className="editor-container">
-            <div className="editor-header-mobile" style={{ display: 'flex', alignItems: 'center', padding: '10px 20px' }}>
-                <div
-                    className="mobile-back-btn"
-                    onClick={() => dispatch({ type: 'SET_ACTIVE_NOTE', payload: null })}
-                    style={{ marginRight: 16 }}
-                >
-                    <IconChevronLeft /> Back
-                </div>
-                <div style={{ fontSize: 12, opacity: 0.4, flex: 1, textAlign: 'center' }}>
-                    {new Date(note.updatedAt).toLocaleString()}
-                </div>
-                <div style={{ width: 40 }}></div> {/* Spacer for balance */}
+        <div className="editor-container" onClick={() => contentRef.current?.focus()}>
+            <div style={{ textAlign: 'center', padding: '10px 0', color: 'var(--text-secondary)', fontSize: '12px' }}>
+                {formattedDate}
             </div>
 
-            <div className="editor-content" style={{ maxWidth: 700, margin: '0 auto', width: '100%', padding: '0 40px' }}>
-                <input
-                    ref={titleRef}
-                    className="editor-title"
-                    placeholder="Title"
-                    style={{ fontSize: 28, fontWeight: 700, width: '100%', marginBottom: 20 }}
-                    onChange={handleInput}
-                />
+            <div className="editor-content" style={{ maxWidth: 700, margin: '0 auto', width: '100%', padding: '0 40px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Removed separate input */}
 
                 <div
                     ref={contentRef}
                     contentEditable
                     className="editor-body"
-                    style={{ fontSize: 17, lineHeight: 1.6, outline: 'none', minHeight: '60vh' }}
+                    style={{ fontSize: 17, lineHeight: 1.6, outline: 'none', flex: 1 }}
                     onInput={handleInput}
                     onMouseUp={handleSelect}
                     onKeyUp={handleSelect}
