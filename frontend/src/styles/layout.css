@@ -158,21 +158,29 @@
 .group-header {
     position: sticky;
     top: 0;
-    padding: 8px 20px;
+    padding: 12px 20px 8px 20px;
+    /* More breathing room */
     background-color: var(--bg-list);
-    opacity: 0.95;
-    backdrop-filter: blur(10px);
+    opacity: 0.98;
+    backdrop-filter: blur(20px);
     z-index: 10;
 
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-secondary);
-    text-transform: uppercase;
+    font-size: 13px;
+    /* Larger than 11px */
+    font-weight: 600;
+    /* Semibold */
+    color: var(--text-primary);
+    /* Darker for better contrast */
+    text-transform: none;
+    /* Apple uses Sentence case often for headers now, but sticking to design request */
+    /* If user wants CAPS, keep it. Let's stick to design reference "Previous 30 Days" is Title Case usually. */
 }
 
 .note-item {
-    padding: 10px 14px;
+    padding: 12px 20px;
+    /* Generous padding */
     margin: 4px 12px;
+    /* Keep current style */
     border-radius: 6px;
     cursor: pointer;
     border-bottom: 1px solid var(--border-subtle);
@@ -187,6 +195,28 @@
     /* Light Highlight (Yellow tint) */
     color: var(--text-primary);
     border-bottom-color: transparent;
+}
+
+.note-title {
+    font-weight: 600;
+    /* Semibold, not bold-heavy */
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.note-preview {
+    font-size: 14px;
+    /* Readable body size */
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    font-weight: 400;
+    /* Regular */
+    opacity: 0.9;
 }
 
 /* Ensure text doesn't change color on selection unlike dark mode selection usually */
@@ -222,17 +252,14 @@
 }
 
 .note-card-preview-box {
-    background-color: #1e1e1e;
-    /* Slightly lighter than pure black */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    /* Higher contrast border */
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
     border-radius: 12px;
     height: 140px;
     padding: 16px;
     overflow: hidden;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    /* Deeper shadow */
+    box-shadow: var(--shadow-card);
     position: relative;
 }
 
@@ -243,11 +270,12 @@
 }
 
 .note-card-wrapper:hover .note-card-preview-box {
-    border-color: rgba(255, 255, 255, 0.4);
-    /* Brighter hover border */
+    border-color: var(--text-secondary);
+    /* Dynamic hover border */
     transform: translateY(-2px);
     /* Subtle lift */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    /* Softer shadow for light mode too */
 }
 
 .note-card-preview-content {
@@ -275,8 +303,7 @@
     /* Bolder title */
     font-size: 15px;
     /* Slightly larger */
-    color: #ffffff;
-    /* Pure white */
+    color: var(--card-title);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -286,8 +313,7 @@
 
 .note-card-date {
     font-size: 13px;
-    color: #86868b;
-    /* Specific gray for date */
+    color: var(--card-date);
     font-weight: 500;
 }
 

@@ -1,4 +1,3 @@
-import { ThemeToggle } from '../theme/ThemeToggle';
 import '../../styles/layout.css';
 
 export const SidebarHeader = () => {
@@ -10,7 +9,6 @@ export const SidebarHeader = () => {
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e', opacity: 0.2 }}></div>
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f', opacity: 0.2 }}></div>
             </div>
-            <ThemeToggle />
         </div>
     );
 };
