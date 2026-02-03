@@ -1,22 +1,18 @@
 import type { Note } from '../types/note';
 
-export type DateGroup = 'Today' | 'Previous 7 Days' | 'Previous 30 Days' | 'Older';
+export type DateGroup = 'Today' | 'Yesterday' | 'Previous 7 Days' | 'Previous 30 Days' | 'Older';
 
 export const getDateGroup = (dateStr: string): DateGroup => {
     const date = new Date(dateStr);
     const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfYesterday = new Date(startOfToday);
+    startOfYesterday.setDate(startOfToday.getDate() - 1);
 
-    // Hours difference
+    if (date >= startOfToday) return 'Today';
+    if (date >= startOfYesterday) return 'Yesterday';
+
     const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffHours = diffTime / (1000 * 60 * 60);
-
-    // Check if same calendar day for "Today"
-    const isSameDay = now.getDate() === date.getDate() &&
-        now.getMonth() === date.getMonth() &&
-        now.getFullYear() === date.getFullYear();
-
-    if (diffHours < 24 && isSameDay) return 'Today';
-
     const diffDays = diffTime / (1000 * 60 * 60 * 24);
 
     if (diffDays < 7) return 'Previous 7 Days';
@@ -28,6 +24,7 @@ export const getDateGroup = (dateStr: string): DateGroup => {
 export const groupNotesByDate = (notes: Note[]): Record<DateGroup, Note[]> => {
     const groups: Record<DateGroup, Note[]> = {
         'Today': [],
+        'Yesterday': [],
         'Previous 7 Days': [],
         'Previous 30 Days': [],
         'Older': []

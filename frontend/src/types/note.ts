@@ -6,6 +6,7 @@ export interface Note {
     isPinned: boolean;
     createdAt: string; // ISO Date
     updatedAt: string; // ISO Date
+    deletedAt?: string; // ISO Date, if present means in trash
 }
 
 export interface Folder {

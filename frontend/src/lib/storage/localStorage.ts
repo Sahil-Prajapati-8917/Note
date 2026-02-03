@@ -1,5 +1,5 @@
-import { StorageDriver } from './types';
-import { AppState } from '../../store/appReducer';
+import type { StorageDriver } from './types';
+import type { AppState } from '../../store/appReducer';
 
 export class LocalStorageDriver implements StorageDriver {
     async save(key: string, data: AppState): Promise<void> {

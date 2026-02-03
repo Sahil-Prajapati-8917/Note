@@ -1,5 +1,5 @@
 import { LocalStorageDriver } from './localStorage';
-import { StorageDriver } from './types';
+import type { StorageDriver } from './types';
 
 const currentDriver: StorageDriver = new LocalStorageDriver();
 

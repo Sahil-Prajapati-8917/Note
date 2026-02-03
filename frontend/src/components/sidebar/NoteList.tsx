@@ -10,6 +10,15 @@ export const NoteList = () => {
 
     // 1. Filter
     const filtered = state.notes.filter(note => {
+        const isTrash = state.activeFolderId === 'trash';
+        const notesInTrash = !!note.deletedAt;
+
+        if (isTrash) {
+            return notesInTrash;
+        }
+
+        if (notesInTrash) return false;
+
         const matchesFolder = state.activeFolderId ? note.folderId === state.activeFolderId : true;
         const matchesSearch = state.searchQuery
             ? note.title.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
@@ -23,7 +32,7 @@ export const NoteList = () => {
 
     // 3. Group
     const groups = groupNotesByDate(filtered);
-    const groupOrder: DateGroup[] = ['Today', 'Previous 7 Days', 'Previous 30 Days', 'Older'];
+    const groupOrder: DateGroup[] = ['Today', 'Yesterday', 'Previous 7 Days', 'Previous 30 Days', 'Older'];
 
     const isEmpty = filtered.length === 0;
 

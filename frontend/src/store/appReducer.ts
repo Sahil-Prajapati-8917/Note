@@ -11,6 +11,7 @@ export interface AppState {
     sidebarVisible: boolean;
     viewMode: 'list' | 'grid';
     theme: ThemeMode;
+    focusMode: boolean;
 }
 
 export const initialState: AppState = {
@@ -26,6 +27,7 @@ export const initialState: AppState = {
     sidebarVisible: true,
     viewMode: 'list',
     theme: 'system',
+    focusMode: false,
 };
 
 export const appReducer = (state: AppState, action: AppAction): AppState => {
@@ -77,16 +79,53 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
         }
 
         case 'DELETE_NOTE': {
-            const nextNotes = state.notes.filter(n => n.id !== action.payload);
             return {
                 ...state,
-                notes: nextNotes,
+                notes: state.notes.map(n =>
+                    n.id === action.payload
+                        ? { ...n, deletedAt: new Date().toISOString() }
+                        : n
+                ),
+                activeNoteId: null
+            };
+        }
+
+        case 'RESTORE_NOTE': {
+            return {
+                ...state,
+                notes: state.notes.map(n =>
+                    n.id === action.payload
+                        ? { ...n, deletedAt: undefined }
+                        : n
+                )
+            };
+        }
+
+        case 'DELETE_NOTE_PERMANENTLY': {
+            return {
+                ...state,
+                notes: state.notes.filter(n => n.id !== action.payload),
+                activeNoteId: state.activeNoteId === action.payload ? null : state.activeNoteId
+            };
+        }
+
+        case 'EMPTY_TRASH': {
+            return {
+                ...state,
+                notes: state.notes.filter(n => !n.deletedAt),
                 activeNoteId: null
             };
         }
 
         case 'TOGGLE_SIDEBAR':
             return { ...state, sidebarVisible: !state.sidebarVisible };
+
+        case 'TOGGLE_FOCUS_MODE':
+            return { ...state, focusMode: !state.focusMode, sidebarVisible: state.focusMode }; // Restore sidebar if exiting focus mode? Or just toggle.
+        // Requirement says "Hides sidebar and toolbar".
+        // If entering focus mode (!state.focusMode -> true), hide sidebar.
+        // If exiting, maybe restore? Or just leave hidden.
+        // Let's just toggle focusMode. The UI will react.
 
         case 'SET_VIEW_MODE':
             return { ...state, viewMode: action.payload };

@@ -8,11 +8,11 @@ export const AppLayout = () => {
     const { state } = useAppStore();
     return (
         <>
-            <Toolbar />
-            <div className="main-content">
-                {state.sidebarVisible && <Sidebar />}
-                <NoteList />
-                {state.viewMode === 'list' && <Editor />}
+            {!state.focusMode && <Toolbar />}
+            <div className={`main-content ${state.focusMode ? 'focus-mode' : ''}`} style={state.focusMode ? { justifyContent: 'center' } : {}}>
+                {!state.focusMode && state.sidebarVisible && <Sidebar />}
+                {!state.focusMode && <NoteList />}
+                <Editor />
             </div>
         </>
     );

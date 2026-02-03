@@ -1,4 +1,4 @@
-import { AppState } from '../../store/appReducer';
+import type { AppState } from '../../store/appReducer';
 
 export interface StorageDriver {
     save(key: string, data: AppState): Promise<void>;
