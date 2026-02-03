@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import { appReducer, initialState, type AppState } from './appReducer';
 import type { AppAction } from './actions';
+import { storageAdapter } from '../lib/storage/adapter';
 
 interface AppContextProps {
     state: AppState;
@@ -16,21 +17,19 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     // Load from Storage
     useEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved);
-                dispatch({ type: 'LOAD_STATE', payload: parsed });
-            } catch (e) {
-                console.error('Failed to load state', e);
+        const loadState = async () => {
+            const savedState = await storageAdapter.load(STORAGE_KEY);
+            if (savedState) {
+                dispatch({ type: 'LOAD_STATE', payload: savedState });
             }
-        }
+        };
+        loadState();
     }, []);
 
     // Save to Storage
     useEffect(() => {
         if (state !== initialState) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            storageAdapter.save(STORAGE_KEY, state);
         }
     }, [state]);
 
