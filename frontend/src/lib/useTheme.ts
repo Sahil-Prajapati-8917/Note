@@ -1,4 +1,4 @@
-import { useAppStore } from '../store/AppContext';
+import { useAppStore } from '../store/hooks';
 import type { ThemeMode } from '../types/theme';
 
 export const useTheme = () => {

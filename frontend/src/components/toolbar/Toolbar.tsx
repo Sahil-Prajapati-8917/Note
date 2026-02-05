@@ -1,4 +1,4 @@
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 import { createNote, deleteNote } from '../../store/actions';
 import {
     IconSidebar,

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAppStore } from '../store/AppContext';
+import { useAppStore } from '../store/hooks';
 import { createNote } from '../store/actions';
 
 export const useShortcuts = () => {

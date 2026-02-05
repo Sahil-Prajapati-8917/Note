@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 import type { Note } from '../../types/note';
 import '../../styles/layout.css';
 
@@ -19,6 +19,7 @@ export const LinkAutocomplete = ({ query, position, onSelect, onClose }: LinkAut
     ).slice(0, 5); // Limit to 5 results
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedIndex(0);
     }, [query]);
 

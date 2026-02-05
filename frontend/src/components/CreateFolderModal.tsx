@@ -13,11 +13,8 @@ export const CreateFolderModal: React.FC<CreateFolderModalProps> = ({ isOpen, on
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (isOpen) {
-            setName('');
-            setTimeout(() => inputRef.current?.focus(), 50); // Focus after mount
-        }
-    }, [isOpen]);
+        setTimeout(() => inputRef.current?.focus(), 50); // Focus after mount
+    }, []);
 
     if (!isOpen) return null;
 

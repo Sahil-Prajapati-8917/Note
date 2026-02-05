@@ -1,4 +1,4 @@
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 import type { DateGroup } from '../../utils/dateGrouping';
 import { groupNotesByDate } from '../../utils/dateGrouping';
 import { Input } from '../ui/Input';
@@ -36,7 +36,7 @@ export const NoteList = () => {
 
     const isEmpty = filtered.length === 0;
 
-    const getPreview = (note: any) => {
+    const getPreview = (note: import('../../types/note').Note) => {
         // Strip tags
         const text = note.content.replace(/<[^>]+>/g, '');
         // If title is part of content (first line), strip it from preview? 

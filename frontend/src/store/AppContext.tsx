@@ -1,14 +1,7 @@
-import React, { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import { appReducer, initialState, type AppState } from './appReducer';
-import type { AppAction } from './actions';
+import React, { useReducer, useEffect, type ReactNode } from 'react';
+import { appReducer, initialState } from './appReducer';
 import { storageAdapter } from '../lib/storage/adapter';
-
-interface AppContextProps {
-    state: AppState;
-    dispatch: React.Dispatch<AppAction>;
-}
-
-const AppContext = createContext<AppContextProps | undefined>(undefined);
+import { AppContext } from './context';
 
 const STORAGE_KEY = 'nebula-notes-v2';
 
@@ -62,10 +55,4 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </AppContext.Provider>
     );
-};
-
-export const useAppStore = () => {
-    const context = useContext(AppContext);
-    if (!context) throw new Error('useAppStore must be used within AppProvider');
-    return context;
 };

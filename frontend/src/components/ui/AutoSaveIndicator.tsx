@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 
 export const AutoSaveIndicator = () => {
     const { state } = useAppStore();
@@ -8,10 +8,11 @@ export const AutoSaveIndicator = () => {
 
     useEffect(() => {
         if (!activeNote) return;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSaved(true);
         const timer = setTimeout(() => setSaved(false), 800);
         return () => clearTimeout(timer);
-    }, [activeNote?.updatedAt]);
+    }, [activeNote?.updatedAt, activeNote]);
 
     if (!saved) return null;
 

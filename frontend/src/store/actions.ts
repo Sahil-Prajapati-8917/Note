@@ -1,5 +1,6 @@
 import type { Note } from '../types/note';
 import type { ThemeMode } from '../types/theme';
+import type { AppState } from './appReducer';
 
 export type AppAction =
     | { type: 'SET_ACTIVE_FOLDER'; payload: string }
@@ -16,7 +17,7 @@ export type AppAction =
     | { type: 'TOGGLE_SIDEBAR' }
     | { type: 'TOGGLE_FOCUS_MODE' }
     | { type: 'SET_VIEW_MODE'; payload: 'list' | 'grid' }
-    | { type: 'LOAD_STATE'; payload: any }; // For hydration
+    | { type: 'LOAD_STATE'; payload: AppState }; // For hydration
 
 export const createNote = (folderId: string): AppAction => ({
     type: 'ADD_NOTE',

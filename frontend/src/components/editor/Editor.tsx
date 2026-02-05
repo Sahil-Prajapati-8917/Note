@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 import { updateNote } from '../../store/actions';
 import { FloatingToolbar } from './FloatingToolbar';
 import { LinkAutocomplete } from './LinkAutocomplete';
@@ -21,14 +21,14 @@ export const Editor = () => {
     const [linkMenuPos, setLinkMenuPos] = useState({ top: 0, left: 0 });
     const [linkRangeInfo, setLinkRangeInfo] = useState<{ container: Node, offset: number, length: number } | null>(null);
 
+
     // Sync state to UI when active note changes
     useEffect(() => {
         if (!note) return;
-        // if (titleRef.current) titleRef.current.value = note.title; // Removed separate title sync
         if (contentRef.current && contentRef.current.innerHTML !== note.content) {
             contentRef.current.innerHTML = note.content;
         }
-    }, [note?.id]);
+    }, [note]);
 
     if (!note) {
         return (
@@ -206,7 +206,7 @@ export const Editor = () => {
             </div>
 
             <div className="editor-content" style={{ maxWidth: 700, margin: '0 auto', width: '100%', padding: '0 40px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Removed separate input */}
+
 
                 <div
                     ref={contentRef}

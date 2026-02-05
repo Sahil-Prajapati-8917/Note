@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useAppStore } from '../store/AppContext';
+import { useAppStore } from '../store/hooks';
 import { IconSearch, IconPlus, IconFolder, IconSun, IconMoon, IconShare } from './ui/Icons';
 import { downloadFile, htmlToMarkdown } from '../utils/exportUtils';
 import '../styles/layout.css';
@@ -11,7 +11,7 @@ interface CommandPaletteProps {
 
 type CommandItem = {
     id: string;
-    icon: any;
+    icon: React.ComponentType<{ style?: React.CSSProperties }>;
     label: string;
     action: () => void;
     type: 'action' | 'note' | 'folder';
@@ -23,13 +23,10 @@ export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // Initial focus
     useEffect(() => {
-        if (isOpen) {
-            setQuery('');
-            setSelectedIndex(0);
-            setTimeout(() => inputRef.current?.focus(), 50);
-        }
-    }, [isOpen]);
+        setTimeout(() => inputRef.current?.focus(), 50);
+    }, []);
 
     if (!isOpen) return null;
 

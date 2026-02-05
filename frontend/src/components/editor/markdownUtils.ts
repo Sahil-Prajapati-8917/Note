@@ -9,7 +9,7 @@ const triggers: MarkdownTrigger[] = [
     { pattern: /^#\s$/, command: 'formatBlock', value: 'H1', offset: 2 },
     { pattern: /^##\s$/, command: 'formatBlock', value: 'H2', offset: 3 },
     { pattern: /^###\s$/, command: 'formatBlock', value: 'H3', offset: 4 },
-    { pattern: /^\-\s$/, command: 'insertUnorderedList', offset: 2 },
+    { pattern: /^-\s$/, command: 'insertUnorderedList', offset: 2 },
     { pattern: /^\*\s$/, command: 'insertUnorderedList', offset: 2 },
     { pattern: /^1\.\s$/, command: 'insertOrderedList', offset: 3 },
     { pattern: /^>\s$/, command: 'formatBlock', value: 'BLOCKQUOTE', offset: 2 },
@@ -25,7 +25,7 @@ export const checkMarkdownTrigger = (text: string): MarkdownTrigger | null => {
 };
 
 export const checkLinkTrigger = (text: string): { query: string; offset: number } | null => {
-    const match = text.match(/\[\[([^\[\]]*)$/);
+    const match = text.match(/\[\[([^[\]]*)$/);
     if (match) {
         return {
             query: match[1],

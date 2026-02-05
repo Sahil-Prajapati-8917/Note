@@ -1,0 +1,91 @@
+
+> note@0.0.0 lint
+> eslint .
+
+
+/Users/sahil/Desktop/note/frontend/src/components/CommandPalette.tsx
+  14:11  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  28:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/sahil/Desktop/note/frontend/src/components/CommandPalette.tsx:28:13
+  26 |     useEffect(() => {
+  27 |         if (isOpen) {
+> 28 |             setQuery('');
+     |             ^^^^^^^^ Avoid calling setState() directly within an effect
+  29 |             setSelectedIndex(0);
+  30 |             setTimeout(() => inputRef.current?.focus(), 50);
+  31 |         }  react-hooks/set-state-in-effect
+
+/Users/sahil/Desktop/note/frontend/src/components/CreateFolderModal.tsx
+  17:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/sahil/Desktop/note/frontend/src/components/CreateFolderModal.tsx:17:13
+  15 |     useEffect(() => {
+  16 |         if (isOpen) {
+> 17 |             setName('');
+     |             ^^^^^^^ Avoid calling setState() directly within an effect
+  18 |             setTimeout(() => inputRef.current?.focus(), 50); // Focus after mount
+  19 |         }
+  20 |     }, [isOpen]);  react-hooks/set-state-in-effect
+
+/Users/sahil/Desktop/note/frontend/src/components/app/AppShell.tsx
+  27:8  warning  React Hook useEffect has a missing dependency: 'dispatch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/sahil/Desktop/note/frontend/src/components/editor/LinkAutocomplete.tsx
+  22:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/sahil/Desktop/note/frontend/src/components/editor/LinkAutocomplete.tsx:22:9
+  20 |
+  21 |     useEffect(() => {
+> 22 |         setSelectedIndex(0);
+     |         ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  23 |     }, [query]);
+  24 |
+  25 |     useEffect(() => {  react-hooks/set-state-in-effect
+
+/Users/sahil/Desktop/note/frontend/src/components/editor/markdownUtils.ts
+  12:18  error  Unnecessary escape character: \-  no-useless-escape
+  28:38  error  Unnecessary escape character: \[  no-useless-escape
+
+/Users/sahil/Desktop/note/frontend/src/components/sidebar/NoteList.tsx
+  39:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/sahil/Desktop/note/frontend/src/components/ui/AutoSaveIndicator.tsx
+  11:9  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/sahil/Desktop/note/frontend/src/components/ui/AutoSaveIndicator.tsx:11:9
+   9 |     useEffect(() => {
+  10 |         if (!activeNote) return;
+> 11 |         setSaved(true);
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  12 |         const timer = setTimeout(() => setSaved(false), 800);
+  13 |         return () => clearTimeout(timer);
+  14 |     }, [activeNote?.updatedAt]);  react-hooks/set-state-in-effect
+  14:8  warning  React Hook useEffect has a missing dependency: 'activeNote'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react-hooks/exhaustive-deps
+
+✖ 10 problems (8 errors, 2 warnings)
+

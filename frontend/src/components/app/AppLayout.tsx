@@ -2,7 +2,7 @@ import { Sidebar } from '../sidebar/Sidebar';
 import { NoteList } from '../sidebar/NoteList';
 import { Editor } from '../editor/Editor';
 import { Toolbar } from '../toolbar/Toolbar';
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 
 export const AppLayout = () => {
     const { state } = useAppStore();

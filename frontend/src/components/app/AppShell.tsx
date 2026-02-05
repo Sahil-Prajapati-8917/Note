@@ -1,7 +1,7 @@
 import { useState, useEffect, type ReactNode } from 'react';
 import { CommandPalette } from '../CommandPalette';
 import { useShortcuts } from '../../lib/useShortcuts';
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 import '../../styles/reset.css';
 import '../../styles/variables.css';
 import '../../styles/layout.css';
@@ -24,7 +24,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [dispatch]);
 
     // Determine current mobile view
     let viewClass = 'view-sidebar';
@@ -37,7 +37,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
     return (
         <div className={`app-shell ${viewClass}`}>
             {children}
-            <CommandPalette isOpen={isPaletteOpen} onClose={() => setPaletteOpen(false)} />
+            {isPaletteOpen && <CommandPalette isOpen={isPaletteOpen} onClose={() => setPaletteOpen(false)} />}
         </div>
     );
 };

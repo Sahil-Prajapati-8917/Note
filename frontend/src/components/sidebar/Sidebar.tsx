@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppStore } from '../../store/AppContext';
+import { useAppStore } from '../../store/hooks';
 import { SidebarHeader } from './SidebarHeader';
 import { IconFolder, IconPlus, IconTrash } from '../ui/Icons';
 import { CreateFolderModal } from '../CreateFolderModal';
@@ -62,11 +62,13 @@ export const Sidebar = () => {
                 </button>
             </div>
 
-            <CreateFolderModal
-                isOpen={isCreateModalOpen}
-                onClose={() => setCreateModalOpen(false)}
-                onCreate={(name) => dispatch({ type: 'ADD_FOLDER', payload: name })}
-            />
+            {isCreateModalOpen && (
+                <CreateFolderModal
+                    isOpen={isCreateModalOpen}
+                    onClose={() => setCreateModalOpen(false)}
+                    onCreate={(name) => dispatch({ type: 'ADD_FOLDER', payload: name })}
+                />
+            )}
         </aside>
     );
 };
