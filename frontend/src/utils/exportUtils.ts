@@ -10,6 +10,7 @@ export const downloadFile = (filename: string, content: string, type: string) =>
     URL.revokeObjectURL(url);
 };
 
+ 
 export const htmlToMarkdown = (html: string): string => {
     let md = html;
 
