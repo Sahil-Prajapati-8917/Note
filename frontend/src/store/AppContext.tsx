@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, type ReactNode } from 'react';
+import { useReducer, useEffect, type ReactNode } from 'react';
 import { appReducer, initialState } from './appReducer';
 import { storageAdapter } from '../lib/storage/adapter';
 import { AppContext } from './context';

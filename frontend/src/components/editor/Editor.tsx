@@ -50,7 +50,7 @@ export const Editor = () => {
         const trigger = checkMarkdownTrigger(text);
         if (trigger) {
             // Found a trigger!
-            console.log('Markdown Trigger:', trigger);
+
 
             // 1. Remove the trigger chars
             const range = document.createRange();
