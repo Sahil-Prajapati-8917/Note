@@ -15,7 +15,8 @@ import {
     IconImage,
     IconSearch,
     IconSun,
-    IconMoon
+    IconMoon,
+    IconChevronLeft
 } from '../ui/Icons';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -51,12 +52,23 @@ export const Toolbar = () => {
         <div className="toolbar-container">
             {/* Left Group: Navigation & View */}
             <div className="toolbar-group">
+                {/* Mobile Back Button */}
+                <Button
+                    variant="icon"
+                    onClick={() => dispatch({ type: 'SET_ACTIVE_NOTE', payload: null })}
+                    title="Back"
+                    className="mobile-only"
+                    style={{ marginRight: 8, display: 'none' }} // Hidden by default, shown via CSS
+                >
+                    <IconChevronLeft />
+                </Button>
+
                 <Button
                     variant="icon"
                     onClick={() => dispatch({ type: 'TOGGLE_SIDEBAR' })}
                     title="Toggle Sidebar"
-                    className={!state.sidebarVisible ? 'active' : ''}
-                    style={{ marginRight: 8 }}
+                    className={`desktop-only ${!state.sidebarVisible ? 'active' : ''}`}
+                    style={{ marginRight: 8, display: 'none' }} // Hidden by default, shown via CSS
                 >
                     <IconSidebar />
                 </Button>
