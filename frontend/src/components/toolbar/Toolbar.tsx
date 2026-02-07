@@ -156,7 +156,7 @@ export const Toolbar = () => {
                     <IconCompose />
                 </Button>
 
-                <Button variant="icon" disabled={!isNoteSelected} title="Format">
+                <Button variant="icon" disabled={!isNoteSelected} title="Format" className="hide-on-mobile">
                     <IconFormat />
                 </Button>
                 <Button
@@ -164,6 +164,7 @@ export const Toolbar = () => {
                     onClick={() => { /* Checklist placeholder */ }}
                     disabled={!isNoteSelected}
                     title="Checklist"
+                    className="hide-on-mobile"
                 >
                     <IconChecklist />
                 </Button>
@@ -172,6 +173,7 @@ export const Toolbar = () => {
                     onClick={() => { /* Table placeholder */ }}
                     disabled={!isNoteSelected}
                     title="Table"
+                    className="hide-on-mobile"
                 >
                     <IconTable />
                 </Button>
@@ -184,7 +186,7 @@ export const Toolbar = () => {
                 <Button variant="icon" disabled={!isNoteSelected} title="Link">
                     <IconLink />
                 </Button>
-                <Button variant="icon" disabled={!isNoteSelected} title="Lock Note">
+                <Button variant="icon" disabled={!isNoteSelected} title="Lock Note" className="hide-on-mobile">
                     <IconLock />
                 </Button>
                 {/* Right Group: Actions */}
@@ -194,7 +196,7 @@ export const Toolbar = () => {
                     </Button>
                     <div style={{ width: 1, height: 16, backgroundColor: 'var(--border-subtle)', margin: '0 4px 0 0' }} />
 
-                    <Button variant="icon" disabled={!isNoteSelected} title="Share">
+                    <Button variant="icon" disabled={!isNoteSelected} title="Share" className="hide-on-mobile">
                         <IconShare />
                     </Button>
                 </div>
@@ -206,7 +208,7 @@ export const Toolbar = () => {
                     placeholder="Search"
                     value={state.searchQuery}
                     onChange={(e) => dispatch({ type: 'SET_SEARCH_QUERY', payload: e.target.value })}
-                    style={{ width: 200, height: 30, fontSize: 13 }}
+                    style={{ width: '100%', maxWidth: 200, minWidth: 120, height: 30, fontSize: 13 }}
                     icon={<div style={{ paddingLeft: 8, display: 'flex' }}><IconSearch width={14} height={14} style={{ opacity: 0.5 }} /></div>}
                 />
             </div>

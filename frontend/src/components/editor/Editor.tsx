@@ -205,7 +205,7 @@ export const Editor = () => {
                 {formattedDate}
             </div>
 
-            <div className="editor-content" style={{ maxWidth: 700, margin: '0 auto', width: '100%', padding: '0 40px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div className="editor-content">
 
 
                 <div
